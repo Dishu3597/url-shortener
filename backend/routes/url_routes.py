@@ -39,8 +39,8 @@ def shorten_url():
     db.session.commit()
 
     return jsonify({
-        "shortCode": short_code,
-        "shortUrl": f"http://127.0.0.1:5000/{short_code}"
+    "shortCode": short_code,
+    "shortUrl": f"{request.host_url.rstrip('/')}/{short_code}"
     }), 201
 
 
@@ -62,11 +62,6 @@ def redirect_url(short_code):
 @url_bp.route("/analytics/<string:short_code>", methods=["GET"])
 def get_analytics(short_code):
 
-    print("Requested:", short_code)
-
-    print("All URLs:")
-    for u in URL.query.all():
-        print(u.short_code, u.original_url)
 
     url = URL.query.filter_by(short_code=short_code).first()
 
