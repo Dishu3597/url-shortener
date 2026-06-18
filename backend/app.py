@@ -7,7 +7,17 @@ from models.url import URL
 
 from routes.url_routes import url_bp
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(
+    app,
+    resources={
+        r"/*": {
+            "origins": [
+                "http://localhost:5173",
+                "https://url-shortener-1-f3ke.onrender.com"
+            ]
+        }
+    }
+)
 
 app.config.from_object(Config)
 
