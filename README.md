@@ -1,65 +1,86 @@
 # URL Shortener
 
-A full-stack URL Shortener application built with **React**, **Flask**, and **SQLite**. Users can shorten long URLs, generate unique short links, redirect using the short URL, and view click analytics for each shortened link.
+A full-stack URL Shortener application built with **React**, **Flask**, and **SQLite**. The application allows users to shorten long URLs, generate unique short links, redirect to the original URL, and view click analytics for each shortened link through a clean and responsive interface.
 
 ---
 
-## Features
+# Live Demo
 
-- Create short URLs from long URLs
-- Automatically generate unique short codes
-- Redirect users to the original URL
-- Track the number of clicks for each shortened URL
-- View analytics for every short URL
-- RESTful API architecture
-- Responsive React frontend
-- SQLite database for persistent storage
+* **Frontend:** https://url-shortener-1-f3ke.onrender.com
+* **Backend API:** https://url-shortener-c4m9.onrender.com
+---
+
+# Features
+
+* Create short URLs from long URLs
+* Automatically generate unique short codes
+* Redirect users to the original URL
+* Track the number of clicks for each shortened URL
+* View analytics for every short URL
+* RESTful API architecture
+* Input validation and error handling
+* Responsive React frontend
+* SQLite database for persistent storage
+* Automated backend tests
 
 ---
 
-## Tech Stack
+# Tech Stack
 
-### Frontend
-- React
-- Axios
-- CSS
+## Frontend
 
-### Backend
-- Flask
-- Flask SQLAlchemy
-- Flask CORS
+* React
+* Axios
+* CSS
 
-### Database
-- SQLite
+## Backend
+
+* Flask
+* Flask SQLAlchemy
+* Flask CORS
+* Pytest
+
+## Database
+
+* SQLite
+
+## Deployment
+
+* Render
 
 ---
 
-## Project Structure
+# Project Structure
 
-```
+```text
 url-shortener/
 │
 ├── backend/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── tests/
+│   ├── utils/
 │   ├── app.py
-│   ├── models.py
-│   ├── routes.py
 │   ├── config.py
-│   ├── database.db
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── ...
 │
 ├── frontend/
-│   ├── src/
 │   ├── public/
-│   └── package.json
+│   ├── src/
+│   ├── package.json
+│   └── ...
 │
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-## API Endpoints
+# API Endpoints
 
-### Create Short URL
+## Create Short URL
 
 **POST**
 
@@ -67,7 +88,7 @@ url-shortener/
 /api/shorten
 ```
 
-Request
+### Request
 
 ```json
 {
@@ -75,18 +96,18 @@ Request
 }
 ```
 
-Response
+### Response
 
 ```json
 {
   "shortCode": "abc123",
-  "shortUrl": "http://localhost:5000/abc123"
+  "shortUrl": "https://url-shortener-c4m9.onrender.com/abc123"
 }
 ```
 
 ---
 
-### Redirect
+## Redirect
 
 **GET**
 
@@ -94,11 +115,11 @@ Response
 /<shortCode>
 ```
 
-Redirects the user to the original URL.
+Redirects the user to the original URL while incrementing the visit count.
 
 ---
 
-### Get Analytics
+## Get Analytics
 
 **GET**
 
@@ -106,7 +127,7 @@ Redirects the user to the original URL.
 /api/analytics/<shortCode>
 ```
 
-Response
+### Response
 
 ```json
 {
@@ -119,26 +140,41 @@ Response
 
 ---
 
-## Installation
+# Installation
 
-### Clone the repository
+## Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Dishu3597/url-shortener.git
+
 cd url-shortener
 ```
 
 ---
 
-### Backend Setup
+## Backend Setup
+
+Navigate to the backend directory.
 
 ```bash
 cd backend
+```
 
+### Create a Virtual Environment
+
+**Windows**
+
+```bash
 python -m venv venv
 ```
 
-Activate the virtual environment
+**macOS/Linux**
+
+```bash
+python3 -m venv venv
+```
+
+### Activate the Virtual Environment
 
 **Windows**
 
@@ -146,27 +182,51 @@ Activate the virtual environment
 venv\Scripts\activate
 ```
 
-**Mac/Linux**
+**macOS/Linux**
 
 ```bash
 source venv/bin/activate
 ```
 
-Install dependencies
+### Install Dependencies
+
+**Windows**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the backend
+**macOS/Linux**
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+### Run the Backend Server
+
+**Windows**
 
 ```bash
 python app.py
 ```
 
+**macOS/Linux**
+
+```bash
+python3 app.py
+```
+
+The backend server will start on:
+
+```
+http://localhost:5000
+```
+
 ---
 
-### Frontend Setup
+## Frontend Setup
+
+Open another terminal.
 
 ```bash
 cd frontend
@@ -176,52 +236,85 @@ npm install
 npm run dev
 ```
 
----
+The frontend will start on:
 
-## Database
-
-The application uses **SQLite**.
-
-Tables include:
-
-- URLs
-- Analytics (click count)
+```
+http://localhost:5173
+```
 
 ---
 
-## How It Works
+# Running Tests
 
-1. User submits a long URL.
-2. Flask generates a unique short code.
-3. The URL is stored in SQLite.
-4. A short URL is returned.
-5. Visiting the short URL redirects to the original URL.
-6. Every redirect increments the click count.
-7. Analytics can be viewed using the analytics endpoint.
+Navigate to the backend directory.
 
----
+```bash
+cd backend
 
-## Future Improvements
-
-- User authentication
-- Custom short aliases
-- QR code generation
-- URL expiration
-- Password-protected links
-- Dashboard with charts
-- Search and filtering
-- Docker support
-- Deployment on Render
+pytest
+```
 
 ---
 
-## Screenshots
+# Database
 
-_Add screenshots of the homepage and analytics page here._
+The application uses **SQLite** for persistent storage.
+
+The database stores:
+
+* Original URLs
+* Generated short codes
+* Creation timestamps
+* Click counts
 
 ---
 
-## Author
+# How It Works
+
+1. The user submits a long URL.
+2. The backend validates the URL.
+3. A unique short code is generated.
+4. The URL is stored in the SQLite database.
+5. A shortened URL is returned.
+6. Visiting the shortened URL redirects to the original URL.
+7. Every successful redirect increments the click count.
+8. Analytics can be retrieved using the analytics endpoint.
+
+---
+
+# Assumptions and Trade-offs
+
+## Assumptions
+
+* Each shortened URL receives a unique randomly generated short code.
+* Analytics track only the total number of visits for each shortened URL.
+* SQLite is sufficient for local development and assessment purposes.
+
+## Trade-offs
+
+* SQLite was chosen for simplicity and ease of setup instead of a production database such as PostgreSQL.
+* User authentication was intentionally omitted to keep the project focused on the assessment requirements.
+* Analytics are limited to click count and creation date; advanced metrics such as IP address, browser information, and geolocation are not collected.
+* Short URLs use the Render deployment domain, resulting in longer URLs than a custom production domain.
+
+---
+
+# Future Improvements
+
+* User authentication
+* Custom short aliases
+* URL expiration
+* QR code generation
+* Password-protected links
+* Advanced analytics (browser, IP address, geolocation)
+* Search and filtering
+* Dashboard with charts
+* Docker support
+* Custom domain for shorter URLs
+
+---
+
+# Author
 
 **Drishti Dagar**
 
